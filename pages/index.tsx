@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import { GetStaticProps } from "next";
-import WeatherLocationSelector from "../components/sections/WeatherLocationSelector";
 import WeatherNewsDisplay from "../components/sections/WeatherNewsDisplay";
 
 type Props = {
@@ -12,9 +11,6 @@ const Home: NextPage = (props: Props & any) => {
 	return (
 		<div className="">
 			<main className="max-w-5xl mx-auto flex flex-col">
-				{/* Weather Selector */}
-				<WeatherLocationSelector />
-
 				{/* Weather Display */}
 				<WeatherNewsDisplay geoData={props.geoData} newsData={props.newsData} />
 
