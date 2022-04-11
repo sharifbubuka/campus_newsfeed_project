@@ -1,0 +1,25 @@
+.homepage {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(120deg, #f87f73 60%, #292423 40%);
+  height: 100vh;
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    @media only screen and (max-width: 50em) {
+      width: 80%;
+      margin: 0 auto;
+      line-height: 6rem;
+    }
+    h1 {
+      span {
+        background: var(--white);
+
+        padding: 0 1rem;
+        font-weight: 300;
+      }
+    }
+  }
+}
