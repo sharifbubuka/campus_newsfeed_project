@@ -11,7 +11,7 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix clientside && npm run build --prefix clientside"
   },
   "engines": {
-    "node": "10.10.0",
+    "node": "14.x",
     "npm": "6.4.1"
   },
   "repository": {
