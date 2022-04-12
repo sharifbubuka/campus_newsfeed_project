@@ -3,7 +3,7 @@ import axios from 'axios';
 export async function getLocationCurrentWeather(location: string = "Uganda") {
     const response = await axios({url: `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&APPID=f8504abe6e01c1d06386e380802e8cba`});    
     const data = response.data;
-    if (response.status !== 200) throw ('Weather for location provided is not available');
+    if (response.status !== 200) throw ('Weather for location provided is not available');    
     return {
         name: data.name,
         main: data.main,

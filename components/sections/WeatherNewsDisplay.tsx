@@ -6,14 +6,14 @@ import { BsCloud } from "react-icons/bs";
 import { weatherAPI } from '../../helpers';
 
 const WeatherNewsDisplay = () => {
-	const [currentWeatherData, setCurrentWeatherData] = useState({name: '', main: {}, weather: [{}], wind: {}});
+	const [currentWeatherData, setCurrentWeatherData] = useState({name: '', main: {temp: '', temp_min: '', temp_max: '', feels_like: '', humidity: '', pressure: ''}, weather: [{description: ''}], wind: {speed: ''}});
 	const [weatherForecastData, setWeatherForecastData] = useState<any>({dt_txt: '', pop: '', main: {}, rain: '', wind: {}, weather: [{}]});
 	const [location, setLocation] = useState("");
 	const [weatherAPIError, setWeatherAPIError] = useState('')
 
 	useEffect(() => {
 		setLocation('');
-		
+
 		weatherAPI.getLocationCurrentWeather()
 			.then(weatherData => setCurrentWeatherData(weatherData));
 
