@@ -1,62 +1,29 @@
 {
-  "name": "weatherapp",
-  "version": "1.0.0",
-  "description": "A news and weather MERN web app",
-  "main": "server.js",
+  "name": "news_and_weather_app",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "server": "nodemon server.js",
-    "client": "npm run start --prefix clientside",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "start": "node server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix clientside && npm run build --prefix clientside"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "engines": {
-    "node": "14.x"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zakali22/WeatherApp.git"
-  },
-  "author": "Zak Ali",
-  "license": "ISC",
   "dependencies": {
-    "axios": "^0.18.0",
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
-    "concurrently": "^4.0.1",
-    "connect-flash": "^0.1.1",
-    "cookie-parser": "^1.4.3",
-    "cookie-session": "^2.0.0-beta.3",
-    "create-react-app": "^2.0.3",
-    "es6-promise": "^4.2.5",
-    "event-stream": ">=4.0.0",
-    "express": "^4.16.3",
-    "express-messages": "^1.0.1",
-    "express-session": "^1.15.6",
-    "express-validator": "^5.3.0",
-    "heroku-cli-util": "^8.0.10",
-    "isomorphic-fetch": "^2.2.1",
-    "moment": "^2.22.2",
-    "mongoose": "^5.2.18",
-    "morgan": "^1.9.1",
-    "newsapi": "^2.4.0",
-    "node-fetch": "^2.2.0",
-    "nodemon": "^1.18.4",
-    "passport": "^0.4.0",
-    "passport-facebook": "^2.1.1",
-    "passport-google-oauth20": "^1.0.0",
-    "passport-http": "^0.3.0",
-    "passport-local": "^1.0.0",
-    "react-redux": "^5.0.7",
-    "react-router-dom": "^4.3.1",
-    "redux": "^4.0.0",
-    "redux-persist": "^5.10.0",
-    "redux-thunk": "^2.3.0",
-    "webpack": "^5.72.0",
-    "webpack-dev-server": "^4.8.1"
+    "axios": "^0.26.1",
+    "next": "12.1.4",
+    "react": "18.0.0",
+    "react-dom": "18.0.0",
+    "react-icons": "^4.3.1"
   },
-  "bugs": {
-    "url": "https://github.com/zakali22/WeatherApp/issues"
-  },
-  "homepage": "https://github.com/zakali22/WeatherApp#readme"
+  "devDependencies": {
+    "@types/node": "17.0.23",
+    "@types/react": "18.0.0",
+    "@types/react-dom": "18.0.0",
+    "autoprefixer": "^10.4.4",
+    "eslint": "8.12.0",
+    "eslint-config-next": "12.1.4",
+    "postcss": "^8.4.12",
+    "tailwindcss": "^3.0.23",
+    "typescript": "4.6.3"
+  }
 }
