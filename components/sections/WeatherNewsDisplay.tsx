@@ -1,9 +1,21 @@
 import { error } from "console";
 import Image from "next/image";
 import Link from "next/link";
+import {BiUserCircle} from 'react-icons/bi';
 import React, { useEffect, useState } from "react";
 import { BsCloud } from "react-icons/bs";
 import { weatherAPI, newsAPI } from '../../helpers';
+
+type News = {
+	id: '',
+	fields: {
+		thumbnail: '',
+		headline: '',
+		shortUrl: '',
+		byline: ''
+	},
+	sectionId: ''
+}
 
 const mobileNewsSections = ['Local News', 'International News'];
 
@@ -13,6 +25,10 @@ const WeatherNewsDisplay = () => {
 	const [location, setLocation] = useState("");
 	const [weatherAPIError, setWeatherAPIError] = useState('')
 	const [activeMobileNewsSection, setActiveMobileNewsSection] = useState(0);
+
+	const [localNews, setLocalNews] = useState<News[]>();
+	const [internationalNews, setInternationalNews] = useState<News[]>();
+	const [visibleNewsSection, setVisibleNewsSection] = useState(1)
 
 	useEffect(() => {
 		// reset location
@@ -27,24 +43,13 @@ const WeatherNewsDisplay = () => {
 			.then(weatherData => setWeatherForecastData(weatherData));
 
 		// get local, internation, sports and technology news
-		// local news
-			// politics
-			newsAPI.getContent({queries: ['Uganda'], pageSize: 20})
-				.then(localPoliticalNews => console.log(localPoliticalNews))
-				.catch(error => {})
-			// tech
-			newsAPI.getContent({queries: ['Uganda'], tags: ['technology'], pageSize: 20})
-				.then()
+			newsAPI.getLocalContent({pageSize: 50})
+				.then(localNews => setLocalNews(localNews))
 				.catch(error => {});
-			// sports
-			newsAPI.getContent({queries: ['Uganda'], tags: ['sports'], pageSize: 20})
-				.then()
-				.catch(error => {})
 
-		// international news
-			// politics
-			// tech
-			// sports
+				newsAPI.getInternationalContent({pageSize: 50})
+				.then(internationalNews => setInternationalNews(internationalNews))
+				.catch(error => {});
 
 	}, []);
 
@@ -54,7 +59,7 @@ const WeatherNewsDisplay = () => {
 	}
 
 	function updateWeatherLocation() {
-		weatherAPI.getLocationCurrentWeather(location)
+		weatherAPI.getLocationCurrentWeather(location.trim())
 			.then(weatherData => weatherData && setCurrentWeatherData(weatherData))
 			.catch(error => {
 				setWeatherAPIError('Weather data for current location is not available! Sorry!! :(');
@@ -63,15 +68,16 @@ const WeatherNewsDisplay = () => {
 				}, 3 * 1000)
 			});
 
-		weatherAPI.getLocationWeatherForecast(location)
+		weatherAPI.getLocationWeatherForecast(location.trim())
 			.then(weatherData => weatherData && setWeatherForecastData(weatherData))
 			.catch(error => {});
 	}
 
 	function handleMobileNewsSectionButtonClick(index: number) {
 		// update active button
-
+		setActiveMobileNewsSection(index);
 		// show local news | show international news
+		setActiveMobileNewsSection(index);
 	}
 
 	return (
@@ -164,12 +170,46 @@ const WeatherNewsDisplay = () => {
 							>{section}</button>
 						))}
 					</div>
-					<div className="md:hidden">
-						
-					</div>
+					<div className="my-4 grid grid-cols-12 gap-4">
+						{localNews && activeMobileNewsSection === 0 && localNews.map(article => (
+							<div key={article.id} className="col-span-6 pb-4 rounded-br-lg rounded-bl-lg flex flex-col">
+								<Image className="c" src={article.fields.thumbnail} alt={article.fields.headline} height={300} width={500} priority />
+								<div className="px-4 py-4 bg-gradient-to-br from-red-400 to-blue-400 rounded-br-lg rounded-bl-lg flex-1 flex flex-col justify-between">
+									<Link href={article.fields.shortUrl} passHref>
+										<p className="cursor-pointer font-semibold leading-5 hover:text-white">{article.fields.headline}</p>
+									</Link>
+									<div className="flex justify-between text-sm my-3">
+										<span className="flex items-center gap-1 text-gray-700">
+											<BiUserCircle size={18} className=""  />
+											<p className="font-semibold">{article.fields.byline.split(' ')[0]} {article.fields.byline.split(' ')[1]}</p>
+										</span>
+										<p className="flex-1 text-right">
+											<span className="bg-green-600 text-white px-2 font-semibold capitalize">{article.sectionId}</span>
+										</p>
+									</div>
+								</div>
+							</div>
+						))}
 
-					<div className="">
-
+						{internationalNews && activeMobileNewsSection === 1 && internationalNews.map(article => (
+							<div key={article.id} className="col-span-6 pb-4 rounded-br-lg rounded-bl-lg flex flex-col">
+								<Image className="rounded-tr-lg rounded-tl-lg" src={article.fields.thumbnail} alt={article.fields.headline} height={300} width={500} priority />
+								<div className="px-4 py-4 bg-gradient-to-br from-red-400 to-blue-400 rounded-br-lg rounded-bl-lg flex-1 flex flex-col justify-between">
+									<Link href={article.fields.shortUrl} passHref>
+										<p className="cursor-pointer font-semibold leading-5 hover:text-white">{article.fields.headline}</p>
+									</Link>
+									<div className="flex justify-between text-sm my-3">
+										<span className="flex items-center gap-1 text-gray-700">
+											<BiUserCircle size={18} className=""  />
+											<p className="font-semibold">{article.fields.byline.split(' ')[0]} {article.fields.byline.split(' ')[1]}</p>
+										</span>
+										<p className="flex-1 text-right">
+											<span className="bg-green-600 text-white px-2 font-semibold capitalize">{article.sectionId}</span>
+										</p>
+									</div>
+								</div>
+							</div>
+						))}
 					</div>
 				</div>
 			</div>
